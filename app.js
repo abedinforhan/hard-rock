@@ -3,8 +3,8 @@ const API_URl="https://api.lyrics.ovh/suggest/"
 const searchLyrics=()=>{
    const searchValue=document.getElementById('searchInput').value;
   
-    fetchData('summer');
-  //  console.log(typeof(searchValue));
+    fetchData(searchValue);
+  
 }
 
 const fetchData=(searchValue)=>{
