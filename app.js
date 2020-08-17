@@ -1,68 +1,83 @@
 const API_URl="https://api.lyrics.ovh/suggest/"
 
+//function to Seach a song name in the search bar
 const searchLyrics=()=>{
-   const searchValue=document.getElementById('searchInput').value;
+  const searchInput=document.getElementById('search-input').value;
   
-    fetchData(searchValue);
-  
-}
+  if(searchInput!=''){
+     fetchSearchData(searchInput);
+   }
+  else{
+    alert('Nothing To Search');
+    }
+ }
 
-const fetchData=(searchValue)=>{
-  const full=API_URl+searchValue;
-  console.log(full);
-   let obj;
-  fetch(full)
+//function to fetch song data from api
+const fetchSearchData=(searchValue)=>{
+  const searchURL=API_URl+searchValue;
+  
+  fetch(searchURL)
   .then(res => res.json())
   .then(data => showData(data))
 } 
 
+//function to show Song List in HTML
 const showData=(data)=>{
-  // console.log(data);
+  
   let html='';
-   
+  
   for(let i=0;i<=9;i++){
-    
-    html+=`<div>
-    <p class="author lead">
-    <strong id="title">
-    ${data.data[i].title}
-    </strong> 
-    Album by 
-    <span artist">${data.data[i].artist.name}</span> 
-    <button id="btn${i}" onclick="getLyrics(this.id)"  class="btn btn-success">
-    Get Lyrics
-    </button>
-    </p>
-    </div>`
+    html+=
+    `<div class="single-result row align-items-center my-3 p-3">
+    <div class="col-md-9">
+        <h3 id="title" class="lyrics-name">${data.data[i].title}</h3>
+        <p id="artist" class="author lead">Album by <span>${data.data[i].artist.name}</span></p>
+    </div>
+    <div class="col-md-3 text-md-right text-center">
+        <button onclick="lyrics(this)" data-song="${data.data[i].title}" data-artist="${data.data[i].artist.name}" class="btn btn-success">Get Lyrics</button>
+    </div>
+   </div>
+    `
   }
-  document.getElementById('show-output').innerHTML=html;
- 
-  }
+  document.getElementById('search-result').innerHTML=html;
+ }
 
-const getLyrics=(btnId)=>{
-  const button=document.getElementById(btnId);
+
+//function to get lyrics from API  
+const getLyrics=(artist,song)=>{
   
-  const artistElem=button.previousElementSibling;
-  const artistName=artistElem.innerText;
-  
-  const titleElem=artistElem.previousElementSibling;
-  const titleName=titleElem.innerText;
-  
-  const lyrics_URL=`https://api.lyrics.ovh/v1/${artistName}/${titleName}`;
+  const lyrics_URL=`https://api.lyrics.ovh/v1/${artist}/${song}`;
   
   fetch(lyrics_URL)
   .then(res=>res.json())
-  .then(data=>showLyrics(data.lyrics,titleName))
+  .then(data=>showLyrics(data.lyrics,song))
 }
 
-const showLyrics=(lyrics='',titleName)=>{
-    document.getElementById('lyrics-title').innerText=titleName;
-    // console.log(lyrics);
+//function to show lyrics into the HTML file
+const showLyrics=(lyrics='',song)=>{
+    document.getElementById('lyrics-title').innerText=song;
      
-    if(lyrics===''){
+    if(lyrics==='') //default value to check lyrics is found or not
+    {   
      document.getElementById('lyrics-output').innerText='Lyrics not Found';
      }
      else{
        document.getElementById('lyrics-output').innerText=lyrics;
       }
 }
+
+//Get-lyrics button call Function
+const lyrics=(element)=>{
+  const artist=element.getAttribute('data-artist');
+  const song=element.getAttribute('data-song');
+   
+  getLyrics(artist,song);
+}
+
+
+
+
+
+
+
+
