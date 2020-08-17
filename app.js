@@ -10,6 +10,7 @@ const searchLyrics=()=>{
   else{
     alert('Nothing To Search');
     }
+    clearLyrics();
  }
 
 //function to fetch json data from api
@@ -83,6 +84,12 @@ const lyricsClick=(element)=>{
 const playPreview=(elem)=>{
  const  previewLink=elem.getAttribute('data-play');
  window.open(previewLink,"_blank");
+}
+
+//function for clear previous lyrics
+const clearLyrics=()=>{
+  document.getElementById('lyrics-output').innerHTML='';
+  document.getElementById('lyrics-title').innerHTML='';
 }
 
 
