@@ -37,5 +37,30 @@ body{
 .single-result{
     background: rgba(255, 255, 255, 0.2);
     border-radius: 15px;
+    font-family: 'Baloo Tamma 2', cursive;
 }
 
+.single-result:hover{
+    background-color:slategray;
+    color: whitesmoke;
+    transform: translateY(-10px);
+    transition: transform 1s;
+}
+
+.lyrics-btn,.lyrics-btn:hover {
+    background-color: purple;
+    border: 1px solid purple;
+}
+.preview-btn,.preview-btn:hover{
+    background-color:darkslategrey;
+    border: 1px solid darkslategrey;
+}
+
+.lyrics-name{
+    color: beige;
+}
+
+.btn-container{
+    display: contents;
+    
+}
